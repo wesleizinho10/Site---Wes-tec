@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wes Tec | Soluções em IA e Dados</title>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -92,7 +93,7 @@
     .cab-acoes { display:flex; align-items:center; gap:10px; }
     .btn-tema {
       background:var(--bg3); border:1px solid var(--borda); color:var(--texto2);
-      width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:16px;
+      width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:18px;
       display:flex; align-items:center; justify-content:center; transition:all 0.2s;
     }
     .btn-tema:hover { border-color:var(--borda-r); color:var(--vermelho); }
@@ -102,6 +103,7 @@
       letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; border:none;
       display:flex; align-items:center; gap:8px; transition:all 0.2s;
     }
+    .btn-carrinho i { font-size: 18px; }
     .btn-carrinho:hover { background:var(--vermelho2); transform:translateY(-2px); box-shadow:0 6px 18px rgba(220,38,38,0.4); }
     #badge-carrinho {
       background:#fff; color:var(--vermelho); border-radius:50%;
@@ -200,7 +202,7 @@
     .passo:hover { background:var(--card); }
     .passo::before { content:''; position:absolute; top:0; left:0; width:3px; height:60px; background:var(--vermelho); }
     .passo-n { font-family:"Barlow Condensed",sans-serif; font-size:90px; font-weight:900; color:rgba(220,38,38,0.06); line-height:1; margin-bottom:16px; display:block; }
-    .passo-icon { width:50px; height:50px; border-radius:8px; background:var(--vermelho-m); border:1px solid var(--borda-r); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:18px; }
+    .passo-icon { width:50px; height:50px; border-radius:8px; background:var(--vermelho-m); color:var(--vermelho); border:1px solid var(--borda-r); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:18px; }
     .passo h3 { font-family:"Barlow Condensed",sans-serif; font-size:22px; font-weight:800; text-transform:uppercase; margin-bottom:12px; color:var(--texto); }
     .passo p { color:var(--texto2); font-size:15px; line-height:1.65; font-weight:300; }
 
@@ -274,9 +276,10 @@
     .btn-branco {
       background:#fff; color:var(--vermelho); padding:18px 40px; border-radius:6px;
       font-family:"Barlow Condensed",sans-serif; font-weight:900; font-size:17px;
-      text-transform:uppercase; letter-spacing:0.5px; text-decoration:none;
+      text-transform:uppercase; letter-spacing:0.5px; text-decoration:none; display:flex; align-items:center; gap:8px;
       white-space:nowrap; transition:all 0.2s; flex-shrink:0;
     }
+    .btn-branco i { font-size: 22px; }
     .btn-branco:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,0.3); }
 
     /* ─── TECNOLOGIAS DETALHADAS ─── */
@@ -295,7 +298,7 @@
     }
     .tec-card:hover::before { transform:scaleX(1); }
     .tec-card:hover { transform:translateY(-4px); border-color:var(--borda-r); }
-    .tec-icon { font-size:36px; }
+    .tec-icon { font-size:36px; color:var(--vermelho); }
     .tec-card h3 { font-family:"Barlow Condensed",sans-serif; font-size:19px; font-weight:800; text-transform:uppercase; color:var(--texto); }
     .tec-card p { font-size:14px; color:var(--texto2); line-height:1.6; font-weight:300; flex-grow:1; }
     .tec-tag {
@@ -390,7 +393,7 @@
       border-radius:12px; padding:32px 28px; transition:all 0.3s;
     }
     .dif-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px var(--sombra); }
-    .dif-icon { font-size:32px; margin-bottom:16px; display:block; }
+    .dif-icon { font-size:32px; margin-bottom:16px; display:block; color:var(--vermelho); }
     .dif-card h3 { font-family:"Barlow Condensed",sans-serif; font-size:20px; font-weight:800; text-transform:uppercase; margin-bottom:10px; color:var(--texto); }
     .dif-card p { font-size:14px; color:var(--texto2); line-height:1.65; font-weight:300; }
 
@@ -426,7 +429,7 @@
     .contato-txt p { font-size:17px; color:var(--texto2); font-weight:300; line-height:1.8; margin-bottom:32px; }
     .features-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
     .feat { display:flex; align-items:flex-start; gap:12px; background:var(--card); border:1px solid var(--borda); padding:16px; border-radius:8px; }
-    .feat-icon { font-size:20px; flex-shrink:0; }
+    .feat-icon { font-size:24px; color:var(--vermelho); flex-shrink:0; }
     .feat-t strong { display:block; font-size:14px; font-weight:600; color:var(--texto); margin-bottom:3px; }
     .feat-t span { font-size:12px; color:var(--texto2); font-weight:300; }
     .contact-card { background:var(--card); border:1px solid var(--borda); border-top:3px solid var(--vermelho); border-radius:12px; padding:40px; position:relative; overflow:hidden; }
@@ -440,10 +443,11 @@
       text-transform:uppercase; letter-spacing:0.5px; text-decoration:none;
       transition:all 0.2s; width:100%;
     }
+    .wpp-btn i { font-size: 24px; }
     .wpp-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,211,102,0.35); }
     .contact-info { margin-top:20px; display:flex; flex-direction:column; gap:10px; }
     .ci { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--texto2); }
-    .ci span:first-child { color:var(--vermelho); }
+    .ci i { color:var(--vermelho); font-size: 18px; }
 
     /* ─── CARRINHO ─── */
     .overlay-carrinho {
@@ -494,10 +498,12 @@
     .linha-total.destaque { font-family:"Barlow Condensed",sans-serif; font-size:22px; font-weight:900; color:var(--texto); border-top:1px dashed var(--borda); padding-top:12px; margin-top:4px; }
     .linha-total.destaque span:last-child { color:var(--vermelho); }
     .btn-finalizar { background:var(--verde-wpp); color:#fff; width:100%; padding:16px; border:none; border-radius:8px; font-family:"Barlow Condensed",sans-serif; font-weight:900; font-size:17px; cursor:pointer; margin-top:14px; text-transform:uppercase; letter-spacing:0.06em; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .btn-finalizar i { font-size: 22px; }
     .btn-finalizar:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(37,211,102,0.35); }
 
     /* ─── TOAST ─── */
-    #toast { visibility:hidden; background:var(--vermelho); color:#fff; padding:12px 24px; border-radius:6px; position:fixed; z-index:1000; left:50%; bottom:30px; transform:translateX(-50%); font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.04em; box-shadow:0 6px 24px rgba(0,0,0,0.4); opacity:0; transition:opacity 0.3s,bottom 0.3s; white-space:nowrap; }
+    #toast { visibility:hidden; background:var(--vermelho); color:#fff; padding:12px 24px; border-radius:6px; position:fixed; z-index:1000; left:50%; bottom:30px; transform:translateX(-50%); font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:15px; text-transform:uppercase; letter-spacing:0.04em; box-shadow:0 6px 24px rgba(0,0,0,0.4); opacity:0; transition:opacity 0.3s,bottom 0.3s; white-space:nowrap; display: flex; align-items: center; gap: 8px; }
+    #toast i { font-size: 20px; }
     #toast.mostrar { visibility:visible; opacity:1; bottom:48px; }
 
     /* ─── FOOTER ─── */
@@ -545,7 +551,6 @@
 </head>
 <body>
 
-<!-- ════ CABEÇALHO ════ -->
 <header class="cabecalho">
   <div class="cab-inner">
     <a href="#" class="marca">WES<em>TEC</em><span class="dot">.</span></a>
@@ -558,15 +563,14 @@
       <a href="#contato">Contato</a>
     </nav>
     <div class="cab-acoes">
-      <button class="btn-tema" id="btn-tema" onclick="alternarTema()" title="Alternar tema">🌙</button>
+      <button class="btn-tema" id="btn-tema" onclick="alternarTema()" title="Alternar tema"><i class="ph ph-moon"></i></button>
       <button class="btn-carrinho" onclick="abrirCarrinho()">
-        🛒 Pedido <span id="badge-carrinho">0</span>
+        <i class="ph ph-shopping-cart"></i> Pedido <span id="badge-carrinho">0</span>
       </button>
     </div>
   </div>
 </header>
 
-<!-- ════ HERO ════ -->
 <section class="hero">
   <div class="hero-inner">
     <div>
@@ -590,7 +594,6 @@
   </div>
 </section>
 
-<!-- ════ TICKER ════ -->
 <div class="social-proof">
   <div class="ticker-wrap">
     <div class="ticker-track" id="ticker">
@@ -618,7 +621,6 @@
   </div>
 </div>
 
-<!-- ════ SOBRE ════ -->
 <section id="sobre">
   <div class="container">
     <div class="sobre-inner">
@@ -640,7 +642,6 @@
   </div>
 </section>
 
-<!-- ════ COMO FUNCIONA ════ -->
 <section id="como-funciona">
   <div class="cf-inner container">
     <h2 class="titulo-secao">Como <em>funciona</em></h2>
@@ -648,19 +649,19 @@
     <div class="passos-grid">
       <div class="passo">
         <span class="passo-n">01</span>
-        <div class="passo-icon">📦</div>
+        <div class="passo-icon"><i class="ph ph-package"></i></div>
         <h3>Escolha os Serviços</h3>
         <p>Navegue pelo catálogo, explore cada solução e adicione ao carrinho os serviços que fazem sentido para o seu negócio. Sem compromisso ainda.</p>
       </div>
       <div class="passo">
         <span class="passo-n">02</span>
-        <div class="passo-icon">🧾</div>
+        <div class="passo-icon"><i class="ph ph-receipt"></i></div>
         <h3>Monte o Pedido</h3>
         <p>Ajuste quantidades, escolha a forma de pagamento preferida e preencha seus dados básicos. Tudo em segundos, sem precisar criar conta.</p>
       </div>
       <div class="passo">
         <span class="passo-n">03</span>
-        <div class="passo-icon">💬</div>
+        <div class="passo-icon"><i class="ph ph-chat-circle-dots"></i></div>
         <h3>Feche pelo WhatsApp</h3>
         <p>Clique em "Enviar pelo WhatsApp" e tudo vai detalhado direto para o nosso especialista. Respondemos em até 24 horas úteis.</p>
       </div>
@@ -668,7 +669,6 @@
   </div>
 </section>
 
-<!-- ════ CATÁLOGO ════ -->
 <section id="catalogo">
   <div class="cat-inner container">
     <div class="cat-header">
@@ -687,67 +687,65 @@
   </div>
 </section>
 
-<!-- ════ CTA BANNER ════ -->
 <section id="cta-banner">
   <div class="cta-banner-inner">
     <div class="cta-banner-txt">
       <h2>Pronto para transformar sua operação?</h2>
       <p>Fale com um especialista agora. Sem compromisso, sem burocracia. Basta um clique para começar.</p>
     </div>
-    <a href="https://wa.me/5543996469627" target="_blank" class="btn-branco">💬 Falar no WhatsApp</a>
+    <a href="https://wa.me/5543996469627" target="_blank" class="btn-branco"><i class="ph ph-whatsapp-logo"></i> Falar no WhatsApp</a>
   </div>
 </section>
 
-<!-- ════ TECNOLOGIAS ════ -->
 <section id="tecnologias">
   <div class="tec-inner container">
     <h2 class="titulo-secao">Nossas <em>Tecnologias</em></h2>
     <p class="subtitulo-secao">Usamos o que há de melhor no mercado. Ferramentas comprovadas, sem achismo.</p>
     <div class="tec-grid">
       <div class="tec-card">
-        <span class="tec-icon">📊</span>
+        <span class="tec-icon"><i class="ph ph-chart-bar"></i></span>
         <h3>Power BI</h3>
         <p>Dashboards profissionais que transformam dados brutos em visualizações claras e decisões rápidas.</p>
         <span class="tec-tag">Business Intelligence</span>
       </div>
       <div class="tec-card">
-        <span class="tec-icon">🐍</span>
+        <span class="tec-icon"><i class="ph ph-file-code"></i></span>
         <h3>Python</h3>
         <p>Automações, análises estatísticas, modelos de ML e integrações entre sistemas com a linguagem mais versátil.</p>
         <span class="tec-tag">Automação & IA</span>
       </div>
       <div class="tec-card">
-        <span class="tec-icon">🗄️</span>
+        <span class="tec-icon"><i class="ph ph-database"></i></span>
         <h3>SQL Server</h3>
         <p>Modelagem e gestão de banco de dados robusto para empresas que precisam de dados confiáveis e rápidos.</p>
         <span class="tec-tag">Banco de Dados</span>
       </div>
       <div class="tec-card">
-        <span class="tec-icon">🤖</span>
+        <span class="tec-icon"><i class="ph ph-robot"></i></span>
         <h3>OpenAI / GPT</h3>
         <p>Inteligência Artificial aplicada ao seu negócio: atendimento, análise de documentos, geração de relatórios.</p>
         <span class="tec-tag">Inteligência Artificial</span>
       </div>
       <div class="tec-card">
-        <span class="tec-icon">⚙️</span>
+        <span class="tec-icon"><i class="ph ph-gear"></i></span>
         <h3>N8N & Make</h3>
         <p>Automação de fluxos de trabalho e integrações entre dezenas de ferramentas sem precisar programar.</p>
         <span class="tec-tag">Automação RPA</span>
       </div>
       <div class="tec-card">
-        <span class="tec-icon">☁️</span>
+        <span class="tec-icon"><i class="ph ph-cloud"></i></span>
         <h3>Azure</h3>
         <p>Infraestrutura em nuvem escalável para hospedar dados, pipelines e aplicações com segurança enterprise.</p>
         <span class="tec-tag">Cloud & Infra</span>
       </div>
       <div class="tec-card">
-        <span class="tec-icon">🏢</span>
+        <span class="tec-icon"><i class="ph ph-buildings"></i></span>
         <h3>ERP Mellea</h3>
         <p>Sistema modular e ágil desenvolvido para PMEs. Substitui planilhas e centraliza toda a operação.</p>
         <span class="tec-tag">Gestão Empresarial</span>
       </div>
       <div class="tec-card">
-        <span class="tec-icon">🔍</span>
+        <span class="tec-icon"><i class="ph ph-magnifying-glass"></i></span>
         <h3>Google Looker</h3>
         <p>Exploração de dados avançada com governança, colaboração e integração nativa com o ecossistema Google.</p>
         <span class="tec-tag">Analytics</span>
@@ -756,7 +754,6 @@
   </div>
 </section>
 
-<!-- ════ PROCESSO / TIMELINE ════ -->
 <section id="processo">
   <div class="proc-inner container">
     <h2 class="titulo-secao">Nosso <em>Processo</em></h2>
@@ -820,7 +817,6 @@
   </div>
 </section>
 
-<!-- ════ DEPOIMENTOS ════ -->
 <section id="depoimentos">
   <div class="dep-inner container">
     <h2 class="titulo-secao">O que dizem <em>nossos clientes</em></h2>
@@ -857,21 +853,19 @@
   </div>
 </section>
 
-<!-- ════ DIFERENCIAIS ════ -->
 <section id="diferenciais">
   <div class="dif-inner container">
     <h2 class="titulo-secao">Por que a <em>Wes Tec?</em></h2>
     <p class="subtitulo-secao">Especialistas focados em resultado. Sem enrolação, sem terceirização.</p>
     <div class="dif-grid">
-      <div class="dif-card"><span class="dif-icon">⚡</span><h3>Entrega Ágil</h3><p>Projetos em semanas, não meses. Primeira entrega parcial em até 48 horas após o briefing.</p></div>
-      <div class="dif-card"><span class="dif-icon">🔒</span><h3>Dados Seguros</h3><p>Sua informação tratada com confidencialidade total. Contratos com cláusula de sigilo padrão.</p></div>
-      <div class="dif-card"><span class="dif-icon">🤝</span><h3>Suporte Humano</h3><p>Fale diretamente com quem fez o projeto. Sem tickets genéricos, sem suporte robótico.</p></div>
-      <div class="dif-card"><span class="dif-icon">📈</span><h3>ROI Comprovado</h3><p>Métricas claras antes e depois. Entregamos relatório de impacto ao final de cada projeto.</p></div>
+      <div class="dif-card"><span class="dif-icon"><i class="ph ph-lightning"></i></span><h3>Entrega Ágil</h3><p>Projetos em semanas, não meses. Primeira entrega parcial em até 48 horas após o briefing.</p></div>
+      <div class="dif-card"><span class="dif-icon"><i class="ph ph-lock"></i></span><h3>Dados Seguros</h3><p>Sua informação tratada com confidencialidade total. Contratos com cláusula de sigilo padrão.</p></div>
+      <div class="dif-card"><span class="dif-icon"><i class="ph ph-handshake"></i></span><h3>Suporte Humano</h3><p>Fale diretamente com quem fez o projeto. Sem tickets genéricos, sem suporte robótico.</p></div>
+      <div class="dif-card"><span class="dif-icon"><i class="ph ph-trend-up"></i></span><h3>ROI Comprovado</h3><p>Métricas claras antes e depois. Entregamos relatório de impacto ao final de cada projeto.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ════ COMPARATIVO ════ -->
 <section id="comparativo">
   <div class="comp-inner">
     <h2 class="titulo-secao" style="text-align:center;">Wes Tec vs <em>Mercado</em></h2>
@@ -904,7 +898,6 @@
   </div>
 </section>
 
-<!-- ════ FAQ ════ -->
 <section id="faq">
   <div class="faq-inner">
     <h2 class="titulo-secao" style="text-align:center;">Perguntas <em>frequentes</em></h2>
@@ -913,36 +906,33 @@
   </div>
 </section>
 
-<!-- ════ CONTATO ════ -->
 <section id="contato">
   <div class="contato-inner container">
     <div class="contato-txt">
       <h2 class="titulo-secao">Vamos <em>trabalhar juntos?</em></h2>
       <p>Sem formulário, sem robô. Fale com um especialista da Wes Tec, tire suas dúvidas e entenda como podemos transformar sua operação com dados e automação.</p>
       <div class="features-grid">
-        <div class="feat"><span class="feat-icon">🗺️</span><div class="feat-t"><strong>Localização</strong><span>Arapongas, Paraná — BR</span></div></div>
-        <div class="feat"><span class="feat-icon">⏰</span><div class="feat-t"><strong>Horário</strong><span>Seg–Sex, 8h–18h</span></div></div>
-        <div class="feat"><span class="feat-icon">✉️</span><div class="feat-t"><strong>E-mail</strong><span>contato@westec.com.br</span></div></div>
-        <div class="feat"><span class="feat-icon">💬</span><div class="feat-t"><strong>WhatsApp</strong><span>Resposta em até 24h</span></div></div>
+        <div class="feat"><span class="feat-icon"><i class="ph ph-map-pin"></i></span><div class="feat-t"><strong>Localização</strong><span>Arapongas, Paraná — BR</span></div></div>
+        <div class="feat"><span class="feat-icon"><i class="ph ph-clock"></i></span><div class="feat-t"><strong>Horário</strong><span>Seg–Sex, 8h–18h</span></div></div>
+        <div class="feat"><span class="feat-icon"><i class="ph ph-envelope-simple"></i></span><div class="feat-t"><strong>E-mail</strong><span>contato@westec.com.br</span></div></div>
+        <div class="feat"><span class="feat-icon"><i class="ph ph-whatsapp-logo"></i></span><div class="feat-t"><strong>WhatsApp</strong><span>Resposta em até 24h</span></div></div>
       </div>
     </div>
     <div class="contact-card">
       <h3>Prefere falar agora?</h3>
       <p>Clique abaixo e inicie uma conversa diretamente com nosso especialista no WhatsApp. Rápido, sem burocracia.</p>
-      <a href="https://wa.me/5543996469627" target="_blank" class="wpp-btn"><span>💬</span> Chamar no WhatsApp</a>
+      <a href="https://wa.me/5543996469627" target="_blank" class="wpp-btn"><i class="ph ph-whatsapp-logo"></i> Chamar no WhatsApp</a>
       <div class="contact-info">
-        <div class="ci"><span>📍</span> Arapongas, Paraná — BR</div>
-        <div class="ci"><span>⏰</span> Atendimento: Seg–Sex, 8h–18h</div>
-        <div class="ci"><span>✉️</span> contato@westec.com.br</div>
+        <div class="ci"><i class="ph ph-map-pin"></i> Arapongas, Paraná — BR</div>
+        <div class="ci"><i class="ph ph-clock"></i> Atendimento: Seg–Sex, 8h–18h</div>
+        <div class="ci"><i class="ph ph-envelope-simple"></i> contato@westec.com.br</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ TOAST ════ -->
-<div id="toast">✅ Produto adicionado ao pedido!</div>
+<div id="toast"><i class="ph ph-check-circle"></i> Produto adicionado ao pedido!</div>
 
-<!-- ════ CARRINHO ════ -->
 <div class="overlay-carrinho" id="overlay" onclick="fecharCarrinho()"></div>
 <aside class="carrinho-lateral" id="carrinho">
   <div class="carrinho-header">
@@ -965,11 +955,10 @@
       <div class="linha-total desconto" id="linha-desconto"><span>Desconto Pix (5%)</span><span id="txt-desconto">− R$ 0,00</span></div>
       <div class="linha-total destaque"><span>Total</span><span id="txt-total">R$ 0,00</span></div>
     </div>
-    <button class="btn-finalizar" onclick="enviarParaWhatsApp()"><span>💬</span> Enviar pelo WhatsApp</button>
+    <button class="btn-finalizar" onclick="enviarParaWhatsApp()"><i class="ph ph-whatsapp-logo"></i> Enviar pelo WhatsApp</button>
   </div>
 </aside>
 
-<!-- ════ FOOTER ════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -1046,12 +1035,12 @@
     const html = document.documentElement;
     const novo = html.getAttribute('data-tema') === 'escuro' ? 'claro' : 'escuro';
     html.setAttribute('data-tema', novo);
-    document.getElementById('btn-tema').textContent = novo === 'escuro' ? '🌙' : '☀️';
+    document.getElementById('btn-tema').innerHTML = novo === 'escuro' ? '<i class="ph ph-moon"></i>' : '<i class="ph ph-sun"></i>';
     localStorage.setItem('wt-tema', novo);
   }
   (function(){
     const s = localStorage.getItem('wt-tema');
-    if(s){ document.documentElement.setAttribute('data-tema',s); document.getElementById('btn-tema').textContent = s==='escuro'?'🌙':'☀️'; }
+    if(s){ document.documentElement.setAttribute('data-tema',s); document.getElementById('btn-tema').innerHTML = s==='escuro'?'<i class="ph ph-moon"></i>':'<i class="ph ph-sun"></i>'; }
   })();
 
   /* ── FAQ ── */
