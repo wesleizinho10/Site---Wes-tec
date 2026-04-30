@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wes Tec | Soluções em IA e Dados</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ══════════════════════════════════════
+       TEMA: VARIÁVEIS (escuro + claro)
+    ══════════════════════════════════════ */
+    :root,
+    [data-tema="escuro"] {
+      --bg:         #080808;
+      --bg2:        #111111;
+      --bg3:        #181818;
+      --card:       #111111;
+      --card2:      #161616;
+      --borda:      rgba(255,255,255,0.07);
+      --borda-r:    rgba(220,38,38,0.3);
+      --texto:      #f0f0f0;
+      --texto2:     #999;
+      --vermelho:   #dc2626;
+      --vermelho2:  #ef4444;
+      --vermelho-m: rgba(220,38,38,0.12);
+      --branco:     #ffffff;
+      --verde-wpp:  #25d366;
+      --sombra:     rgba(0,0,0,0.6);
+    }
+
+    [data-tema="claro"] {
+      --bg:         #f5f5f5;
+      --bg2:        #ebebeb;
+      --bg3:        #e0e0e0;
+      --card:       #ffffff;
+      --card2:      #f8f8f8;
+      --borda:      rgba(0,0,0,0.1);
+      --borda-r:    rgba(220,38,38,0.4);
+      --texto:      #111111;
+      --texto2:     #555555;
+      --vermelho:   #dc2626;
+      --vermelho2:  #b91c1c;
+      --vermelho-m: rgba(220,38,38,0.08);
+      --branco:     #111111;
+      --verde-wpp:  #16a34a;
+      --sombra:     rgba(0,0,0,0.15);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: "Barlow", sans-serif;
+      background: var(--bg);
+      color: var(--texto);
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* grain escuro apenas */
+    [data-tema="escuro"] body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ══════════════════════════════════════
+       UTILITÁRIOS
+    ══════════════════════════════════════ */
+    .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+    .titulo-secao {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(36px, 4vw, 60px);
+      font-weight: 900; line-height: 1.0;
+      text-transform: uppercase; letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+    .titulo-secao em { color: var(--vermelho); font-style: normal; }
+    .subtitulo-secao {
+      font-size: 17px; font-weight: 300; color: var(--texto2);
+      line-height: 1.7; max-width: 560px; margin-bottom: 56px;
+    }
+
+    /* ══════════════════════════════════════
+       CABEÇALHO
+    ══════════════════════════════════════ */
+    .cabecalho {
+      position: fixed; top: 0; width: 100%; z-index: 50;
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(20px) saturate(1.3);
+      border-bottom: 1px solid var(--borda);
+      transition: background 0.4s;
+    }
+    [data-tema="claro"] .cabecalho {
+      background: rgba(245,245,245,0.92);
+    }
+    .cab-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      padding: 16px 32px; max-width: 1320px; margin: 0 auto;
+    }
+    .marca {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 26px; font-weight: 900; color: var(--texto);
+      text-decoration: none; letter-spacing: 1px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .marca em { color: var(--vermelho); font-style: normal; }
+    .marca .dot { color: var(--vermelho); }
+
+    .menu { display: flex; gap: 28px; }
+    .menu a {
+      color: var(--texto2); text-decoration: none;
+      font-weight: 500; font-size: 15px;
+      transition: color 0.2s;
+    }
+    .menu a:hover { color: var(--texto); }
+
+    .cab-acoes { display: flex; align-items: center; gap: 12px; }
+
+    /* toggle tema */
+    .btn-tema {
+      background: var(--bg3); border: 1px solid var(--borda);
+      color: var(--texto2); width: 40px; height: 40px; border-radius: 50%;
+      cursor: pointer; font-size: 17px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .btn-tema:hover { border-color: var(--borda-r); color: var(--vermelho); }
+
+    .btn-carrinho {
+      background: var(--vermelho); color: #fff;
+      padding: 10px 22px; border-radius: 6px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 700; font-size: 15px; letter-spacing: 0.5px; text-transform: uppercase;
+      cursor: pointer; border: none;
+      display: flex; align-items: center; gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-carrinho:hover {
+      background: var(--vermelho2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(220,38,38,0.4);
+    }
+    #badge-carrinho {
+      background: #fff; color: var(--vermelho);
+      border-radius: 50%; width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+    }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 140px 32px 100px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 65% 45%, rgba(220,38,38,0.07) 0%, transparent 65%),
+        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+      filter: brightness(0.15);
+      z-index: 0;
+    }
+    [data-tema="claro"] .hero::before { filter: brightness(0.08); }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 280px;
+      background: linear-gradient(to top, var(--bg), transparent);
+      z-index: 1;
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1320px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 400px; gap: 80px; align-items: center;
+    }
+
+    /* linha decorativa vermelha */
+    .hero-accent {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .hero-accent-line { width: 48px; height: 3px; background: var(--vermelho); border-radius: 2px; }
+    .hero-accent span {
+      font-size: 12px; font-weight: 600; color: var(--vermelho);
+      text-transform: uppercase; letter-spacing: 0.12em;
+    }
+
+    .hero h1 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(52px, 6.5vw, 96px);
+      font-weight: 900; line-height: 0.95;
+      letter-spacing: -2px; text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .hero h1 em { color: var(--vermelho); font-style: normal; display: block; }
+
+    .hero p {
+      font-size: 18px; line-height: 1.7;
+      color: var(--texto2); max-width: 500px;
+      margin-bottom: 44px; font-weight: 300;
+    }
+    .hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+    .btn-p {
+      background: var(--vermelho); color: #fff;
+      padding: 16px 36px; border-radius: 6px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 800; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;
+      text-decoration: none; display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-p:hover {
+      background: var(--vermelho2);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(220,38,38,0.45);
+    }
+    .btn-s {
+      background: transparent; border: 2px solid var(--borda-r);
+      color: var(--texto); padding: 14px 28px; border-radius: 6px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: 0.5px;
+      text-decoration: none; display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-s:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+    /* card stats hero */
+    .hero-stats {
+      background: var(--card);
+      border: 1px solid var(--borda);
+      border-top: 3px solid var(--vermelho);
+      border-radius: 12px; padding: 36px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+    .stat {
+      padding: 20px; text-align: center;
+      border-right: 1px solid var(--borda);
+      border-bottom: 1px solid var(--borda);
+    }
+    .stat:nth-child(2n) { border-right: none; }
+    .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+    .stat-n {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 48px; font-weight: 900; color: var(--vermelho);
+      line-height: 1; display: block; margin-bottom: 6px;
+    }
+    .stat-l { font-size: 13px; color: var(--texto2); font-weight: 400; line-height: 1.4; }
+
+    /* ══════════════════════════════════════
+       SOCIAL PROOF / TECNOLOGIAS
+    ══════════════════════════════════════ */
+    .social-proof {
+      border-top: 1px solid var(--borda);
+      border-bottom: 1px solid var(--borda);
+      padding: 24px 32px;
+      background: var(--bg2);
+      transition: background 0.4s;
+    }
+    .sp-inner {
+      max-width: 1320px; margin: 0 auto;
+      display: flex; align-items: center; gap: 36px; flex-wrap: wrap;
+    }
+    .sp-label { font-size: 11px; color: var(--texto2); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+    .sp-logos { display: flex; gap: 36px; align-items: center; flex-wrap: wrap; }
+    .sp-logo {
+      color: var(--texto2); font-family: "Barlow Condensed", sans-serif;
+      font-weight: 700; font-size: 15px; letter-spacing: 1px;
+      transition: color 0.2s; opacity: 0.5;
+    }
+    .sp-logo:hover { opacity: 1; color: var(--vermelho); }
+
+    /* ══════════════════════════════════════
+       SOBRE / NÚMEROS
+    ══════════════════════════════════════ */
+    #sobre {
+      padding: 110px 32px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--borda);
+      transition: background 0.4s;
+    }
+    .sobre-inner {
+      max-width: 1320px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+    }
+    .sobre-texto p {
+      font-size: 17px; color: var(--texto2); line-height: 1.8; font-weight: 300; margin-bottom: 28px;
+    }
+    .sobre-texto p:last-child { margin-bottom: 0; }
+    .sobre-numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--borda); border: 1px solid var(--borda); border-radius: 12px; overflow: hidden; }
+    .num-item {
+      background: var(--card); padding: 32px 28px;
+      transition: background 0.3s;
+    }
+    .num-item:hover { background: var(--card2); }
+    .num-n {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 52px; font-weight: 900; color: var(--vermelho);
+      line-height: 1; display: block; margin-bottom: 8px;
+    }
+    .num-l { font-size: 14px; color: var(--texto2); font-weight: 400; }
+
+    /* ══════════════════════════════════════
+       COMO FUNCIONA
+    ══════════════════════════════════════ */
+    #como-funciona { padding: 110px 32px; background: var(--bg); transition: background 0.4s; }
+    .cf-inner { max-width: 1320px; margin: 0 auto; }
+    .passos-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+      background: var(--borda);
+      border: 1px solid var(--borda); border-radius: 14px; overflow: hidden;
+    }
+    .passo {
+      background: var(--card2); padding: 48px 40px;
+      position: relative; transition: background 0.3s;
+    }
+    .passo:hover { background: var(--card); }
+    .passo::before {
+      content: '';
+      position: absolute; top: 0; left: 0; width: 3px; height: 60px;
+      background: var(--vermelho);
+    }
+    .passo-n {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 90px; font-weight: 900;
+      color: rgba(220,38,38,0.06); line-height: 1;
+      margin-bottom: 16px; display: block;
+    }
+    .passo-icon {
+      width: 50px; height: 50px; border-radius: 8px;
+      background: var(--vermelho-m); border: 1px solid var(--borda-r);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 18px;
+    }
+    .passo h3 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 22px; font-weight: 800; text-transform: uppercase;
+      margin-bottom: 12px; color: var(--texto);
+    }
+    .passo p { color: var(--texto2); font-size: 15px; line-height: 1.65; font-weight: 300; }
+
+    /* ══════════════════════════════════════
+       CATÁLOGO
+    ══════════════════════════════════════ */
+    #catalogo { padding: 110px 32px; background: var(--bg2); transition: background 0.4s; }
+    .cat-inner { max-width: 1320px; margin: 0 auto; }
+    .cat-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 48px; gap: 20px; flex-wrap: wrap;
+    }
+    .filtros { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-filtro {
+      background: transparent; border: 1px solid var(--borda);
+      color: var(--texto2); padding: 8px 18px; border-radius: 4px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-filtro:hover { border-color: var(--borda-r); color: var(--texto); }
+    .btn-filtro.ativo { background: var(--vermelho); color: #fff; border-color: var(--vermelho); }
+
+    /* GRID — cards corrigidos */
+    .grid-produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px;
+    }
+    .card-produto {
+      background: var(--card);
+      border: 1px solid var(--borda);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+    .card-produto:hover {
+      transform: translateY(-5px);
+      border-color: var(--borda-r);
+      box-shadow: 0 16px 40px var(--sombra);
+    }
+    .card-img-wrap { position: relative; overflow: hidden; flex-shrink: 0; }
+    .img-produto {
+      width: 100%; height: 210px; object-fit: cover; display: block;
+      transition: transform 0.5s;
+    }
+    .card-produto:hover .img-produto { transform: scale(1.05); }
+    .card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.65) 100%);
+    }
+    .tag-categoria {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--vermelho); color: #fff;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 3px;
+    }
+
+    /* info + rodapé do card em flex column para nunca cortar */
+    .info-produto {
+      padding: 22px 22px 22px;
+      display: flex; flex-direction: column; flex-grow: 1;
+    }
+    .info-produto h3 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 20px; font-weight: 800; text-transform: uppercase;
+      margin-bottom: 8px; line-height: 1.2; color: var(--texto);
+    }
+    .info-produto p {
+      color: var(--texto2); font-size: 14px; line-height: 1.65;
+      font-weight: 300; flex-grow: 1; margin-bottom: 20px;
+    }
+    /* rodapé sempre no final, nunca cortado */
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      border-top: 1px solid var(--borda); padding-top: 18px;
+      flex-shrink: 0;
+    }
+    .preco {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 28px; font-weight: 900; color: var(--vermelho); line-height: 1;
+    }
+    .preco small {
+      display: block; font-size: 12px; color: var(--texto2);
+      font-family: "Barlow", sans-serif; font-weight: 400; margin-bottom: 2px;
+    }
+    .btn-add {
+      background: var(--vermelho-m); border: 1px solid var(--borda-r);
+      color: var(--vermelho);
+      padding: 11px 18px; border-radius: 6px;
+      font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-size: 13px;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+      text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0;
+    }
+    .btn-add:hover { background: var(--vermelho); color: #fff; border-color: var(--vermelho); }
+
+    /* ══════════════════════════════════════
+       DEPOIMENTOS
+    ══════════════════════════════════════ */
+    #depoimentos { padding: 110px 32px; background: var(--bg); transition: background 0.4s; }
+    .dep-inner { max-width: 1320px; margin: 0 auto; }
+    .dep-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .dep-card {
+      background: var(--card); border: 1px solid var(--borda);
+      border-radius: 12px; padding: 32px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .dep-card:hover { border-color: var(--borda-r); transform: translateY(-4px); }
+    .dep-aspas {
+      font-size: 48px; line-height: 1; color: var(--vermelho); margin-bottom: 16px;
+      font-family: "Barlow Condensed", sans-serif; font-weight: 900;
+    }
+    .dep-texto { font-size: 15px; color: var(--texto2); line-height: 1.7; font-weight: 300; margin-bottom: 24px; }
+    .dep-autor { display: flex; align-items: center; gap: 12px; }
+    .dep-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--vermelho-m); border: 2px solid var(--borda-r);
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 16px; color: var(--vermelho);
+    }
+    .dep-nome strong { display: block; font-size: 14px; font-weight: 600; color: var(--texto); }
+    .dep-nome span { font-size: 12px; color: var(--texto2); }
+
+    /* ══════════════════════════════════════
+       POR QUE / DIFERENCIAIS
+    ══════════════════════════════════════ */
+    #diferenciais { padding: 110px 32px; background: var(--bg2); border-top: 1px solid var(--borda); transition: background 0.4s; }
+    .dif-inner { max-width: 1320px; margin: 0 auto; }
+    .dif-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .dif-card {
+      background: var(--card); border: 1px solid var(--borda);
+      border-top: 3px solid var(--vermelho);
+      border-radius: 12px; padding: 32px 28px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .dif-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px var(--sombra); }
+    .dif-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+    .dif-card h3 { font-family: "Barlow Condensed", sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; color: var(--texto); }
+    .dif-card p { font-size: 14px; color: var(--texto2); line-height: 1.65; font-weight: 300; }
+
+    /* ══════════════════════════════════════
+       CONTATO / CTA FINAL
+    ══════════════════════════════════════ */
+    #contato { padding: 110px 32px; background: var(--bg); transition: background 0.4s; }
+    .contato-inner {
+      max-width: 1320px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    .contato-txt p { font-size: 17px; color: var(--texto2); font-weight: 300; line-height: 1.8; margin-bottom: 32px; }
+    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .feat {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--card); border: 1px solid var(--borda);
+      padding: 16px; border-radius: 8px;
+    }
+    .feat-icon { font-size: 20px; flex-shrink: 0; }
+    .feat-t strong { display: block; font-size: 14px; font-weight: 600; color: var(--texto); margin-bottom: 3px; }
+    .feat-t span { font-size: 12px; color: var(--texto2); font-weight: 300; }
+
+    .contact-card {
+      background: var(--card); border: 1px solid var(--borda);
+      border-top: 3px solid var(--vermelho);
+      border-radius: 12px; padding: 40px;
+      position: relative; overflow: hidden;
+    }
+    .contact-card::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(220,38,38,0.08) 0%, transparent 70%);
+    }
+    .contact-card h3 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 28px; font-weight: 900; text-transform: uppercase;
+      margin-bottom: 10px; color: var(--texto);
+    }
+    .contact-card p { color: var(--texto2); font-size: 15px; margin-bottom: 28px; font-weight: 300; line-height: 1.6; }
+    .wpp-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--verde-wpp); color: #fff;
+      padding: 18px; border-radius: 8px;
+      font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-size: 18px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .wpp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.35); }
+    .contact-info { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .ci { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--texto2); }
+    .ci span:first-child { color: var(--vermelho); }
+
+    /* ══════════════════════════════════════
+       CARRINHO LATERAL — AREA ITENS MAIOR
+    ══════════════════════════════════════ */
+    .overlay-carrinho {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
+      z-index: 99; display: none; opacity: 0; transition: opacity 0.3s;
+    }
+    .overlay-carrinho.ativo { display: block; opacity: 1; }
+
+    .carrinho-lateral {
+      position: fixed; top: 0; right: -520px; width: 500px;
+      height: 100%; background: var(--bg);
+      z-index: 100; display: flex; flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+      border-left: 1px solid var(--borda);
+    }
+    .carrinho-lateral.ativo { right: 0; }
+
+    .carrinho-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid var(--borda);
+      padding: 22px 28px; flex-shrink: 0;
+    }
+    .carrinho-header h2 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--texto);
+    }
+    .carrinho-header h2 em { color: var(--vermelho); font-style: normal; }
+    .fechar-carrinho {
+      background: var(--bg2); border: 1px solid var(--borda); color: var(--texto2);
+      width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .fechar-carrinho:hover { border-color: var(--borda-r); color: var(--vermelho); }
+
+    /* área rolável de itens — ocupa todo espaço disponível */
+    .itens-carrinho {
+      flex: 1 1 0%;
+      overflow-y: auto;
+      padding: 20px 28px;
+      min-height: 0; /* crítico para flex scroll */
+    }
+    .itens-carrinho::-webkit-scrollbar { width: 4px; }
+    .itens-carrinho::-webkit-scrollbar-track { background: transparent; }
+    .itens-carrinho::-webkit-scrollbar-thumb { background: var(--borda-r); border-radius: 2px; }
+
+    .item-carrinho {
+      background: var(--card2); border: 1px solid var(--borda);
+      padding: 14px; border-radius: 8px; margin-bottom: 10px;
+    }
+    .item-info { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .item-info h4 { font-size: 14px; font-weight: 500; max-width: 65%; line-height: 1.4; color: var(--texto); }
+    .item-preco { color: var(--vermelho); font-weight: 700; font-family: "Barlow Condensed", sans-serif; font-size: 16px; }
+    .controles-qtd { display: flex; align-items: center; justify-content: space-between; }
+    .qtd-botoes {
+      display: flex; align-items: center;
+      background: var(--bg); border: 1px solid var(--borda); border-radius: 6px; overflow: hidden;
+    }
+    .btn-qtd {
+      background: transparent; border: none; color: var(--texto2);
+      width: 32px; height: 30px; cursor: pointer; font-size: 16px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .btn-qtd:hover { color: var(--vermelho); background: var(--vermelho-m); }
+    .qtd-valor { padding: 0 12px; font-size: 14px; font-weight: 700; color: var(--texto); }
+    .btn-remover { background: transparent; color: var(--texto2); border: none; cursor: pointer; font-size: 12px; transition: color 0.2s; }
+    .btn-remover:hover { color: #ef4444; }
+
+    /* checkout fixo na base */
+    .form-checkout {
+      background: var(--bg2); padding: 22px 28px;
+      border-top: 1px solid var(--borda); flex-shrink: 0;
+    }
+    .form-checkout h3 {
+      font-family: "Barlow Condensed", sans-serif; font-size: 14px; font-weight: 800;
+      color: var(--vermelho); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .form-checkout input {
+      flex: 1; background: var(--bg); border: 1px solid var(--borda);
+      color: var(--texto); padding: 10px 12px; border-radius: 6px;
+      font-family: "Barlow", sans-serif; font-size: 14px; transition: border-color 0.2s;
+    }
+    .form-checkout input:focus { outline: none; border-color: var(--borda-r); }
+    .form-checkout input::placeholder { color: var(--texto2); }
+
+    .label-pag { font-size: 11px; color: var(--texto2); margin: 10px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .opcoes-pagamento { display: flex; gap: 8px; margin-bottom: 6px; }
+    .opcao-pag { flex: 1; }
+    .opcao-pag input { display: none; }
+    .opcao-pag label {
+      display: block; background: var(--bg); border: 1px solid var(--borda);
+      padding: 9px 6px; text-align: center; border-radius: 6px; cursor: pointer;
+      font-size: 12px; font-weight: 700; transition: all 0.2s; color: var(--texto2);
+      font-family: "Barlow Condensed", sans-serif; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .opcao-pag input:checked + label {
+      background: var(--vermelho-m); border-color: var(--borda-r); color: var(--vermelho);
+    }
+
+    .totais { margin-top: 12px; border-top: 1px solid var(--borda); padding-top: 12px; }
+    .linha-total { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; color: var(--texto2); }
+    .linha-total.desconto { color: #22c55e; }
+    .linha-total.destaque {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 22px; font-weight: 900; color: var(--texto);
+      border-top: 1px dashed var(--borda); padding-top: 12px; margin-top: 4px;
+    }
+    .linha-total.destaque span:last-child { color: var(--vermelho); }
+
+    .btn-finalizar {
+      background: var(--verde-wpp); color: #fff;
+      width: 100%; padding: 16px; border: none; border-radius: 8px;
+      font-family: "Barlow Condensed", sans-serif; font-weight: 900; font-size: 17px;
+      cursor: pointer; margin-top: 14px; text-transform: uppercase; letter-spacing: 0.06em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-finalizar:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.35); }
+
+    /* ══════════════════════════════════════
+       TOAST
+    ══════════════════════════════════════ */
+    #toast {
+      visibility: hidden; background: var(--vermelho); color: #fff;
+      padding: 12px 24px; border-radius: 6px;
+      position: fixed; z-index: 1000; left: 50%; bottom: 30px;
+      transform: translateX(-50%);
+      font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 15px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+      opacity: 0; transition: opacity 0.3s, bottom 0.3s; white-space: nowrap;
+    }
+    #toast.mostrar { visibility: visible; opacity: 1; bottom: 48px; }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--bg2); border-top: 1px solid var(--borda);
+      padding: 64px 32px 40px; transition: background 0.4s;
+    }
+    .footer-inner { max-width: 1320px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+      padding-bottom: 48px; border-bottom: 1px solid var(--borda); margin-bottom: 36px;
+    }
+    .footer-marca .marca { font-size: 24px; margin-bottom: 16px; display: inline-flex; }
+    .footer-marca p { color: var(--texto2); font-size: 14px; line-height: 1.7; font-weight: 300; max-width: 300px; }
+    .footer-col h4 { font-family: "Barlow Condensed", sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--vermelho); margin-bottom: 18px; }
+    .footer-col a { display: block; color: var(--texto2); font-size: 14px; text-decoration: none; margin-bottom: 10px; transition: color 0.2s; font-weight: 300; }
+    .footer-col a:hover { color: var(--texto); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: var(--texto2); font-size: 13px; opacity: 0.5; }
+    .footer-vermelho { color: var(--vermelho) !important; opacity: 1 !important; }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-stats { display: none; }
+      .sobre-inner, .contato-inner { grid-template-columns: 1fr; gap: 48px; }
+      .dif-grid { grid-template-columns: 1fr 1fr; }
+      .dep-grid { grid-template-columns: 1fr; gap: 16px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .passos-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .menu { display: none; }
+      .carrinho-lateral { width: 100%; right: -100%; }
+      .cab-inner { padding: 14px 20px; }
+      .hero, #sobre, #como-funciona, #catalogo, #depoimentos, #diferenciais, #contato { padding: 80px 20px; }
+      .cat-header { flex-direction: column; align-items: flex-start; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .opcoes-pagamento { flex-direction: column; }
+      .dif-grid { grid-template-columns: 1fr; }
+      .sobre-numeros { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ CABEÇALHO ════ -->
+<header class="cabecalho">
+  <div class="cab-inner">
+    <a href="#" class="marca">WES<em>TEC</em><span class="dot">.</span></a>
+    <nav class="menu">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#como-funciona">Como Funciona</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="cab-acoes">
+      <button class="btn-tema" id="btn-tema" onclick="alternarTema()" title="Alternar tema">🌙</button>
+      <button class="btn-carrinho" onclick="abrirCarrinho()">
+        🛒 Pedido <span id="badge-carrinho">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-accent">
+        <span class="hero-accent-line"></span>
+        <span>Soluções Ativas em 2026</span>
+      </div>
+      <h1>Transforme dados em <em>decisões inteligentes</em></h1>
+      <p>IA, Business Intelligence e Automação para empresas que querem crescer com dados reais — não intuição.</p>
+      <div class="hero-ctas">
+        <a href="#catalogo" class="btn-p">Ver Soluções →</a>
+        <a href="#como-funciona" class="btn-s">Como funciona</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-n">+120</span>
+        <span class="stat-l">Projetos entregues</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n">98%</span>
+        <span class="stat-l">Clientes satisfeitos</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n">6</span>
+        <span class="stat-l">Soluções disponíveis</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n">24h</span>
+        <span class="stat-l">Retorno garantido</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SOCIAL PROOF ════ -->
+<div class="social-proof">
+  <div class="sp-inner">
+    <span class="sp-label">Tecnologias que usamos</span>
+    <div class="sp-logos">
+      <span class="sp-logo">POWER BI</span>
+      <span class="sp-logo">PYTHON</span>
+      <span class="sp-logo">MELLEA ERP</span>
+      <span class="sp-logo">SQL SERVER</span>
+      <span class="sp-logo">OPENAI</span>
+      <span class="sp-logo">N8N</span>
+      <span class="sp-logo">MAKE</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════ SOBRE ════ -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-inner">
+      <div class="sobre-texto">
+        <h2 class="titulo-secao">Quem é a <em>Wes Tec?</em></h2>
+        <p class="subtitulo-secao">Somos uma consultoria especializada em transformar dados brutos em vantagem competitiva real para pequenas e médias empresas.</p>
+        <p>Não somos uma grande agência com dezenas de camadas. Somos especialistas focados, que trabalham diretamente com você, entendem o seu negócio e entregam soluções que funcionam na prática.</p>
+        <p>Cada projeto começa com escuta ativa. Só implementamos o que realmente faz diferença — seja um ERP que substitui planilhas caóticas, um dashboard que mostra a verdade dos números ou um robô que elimina horas de trabalho manual.</p>
+        <br>
+        <a href="#catalogo" class="btn-p" style="display:inline-block;">Explorar Soluções →</a>
+      </div>
+      <div class="sobre-numeros">
+        <div class="num-item">
+          <span class="num-n">+5</span>
+          <span class="num-l">Anos de experiência em dados e automação</span>
+        </div>
+        <div class="num-item">
+          <span class="num-n">3x</span>
+          <span class="num-l">Mais rápido que uma agência tradicional</span>
+        </div>
+        <div class="num-item">
+          <span class="num-n">100%</span>
+          <span class="num-l">Projetos feitos internamente, sem terceirização</span>
+        </div>
+        <div class="num-item">
+          <span class="num-n">48h</span>
+          <span class="num-l">Tempo médio para primeira entrega parcial</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ COMO FUNCIONA ════ -->
+<section id="como-funciona">
+  <div class="cf-inner container">
+    <h2 class="titulo-secao">Como <em>funciona</em></h2>
+    <p class="subtitulo-secao">Sem complicação. Você monta o pedido, a gente fecha negócio do jeito humano e ágil.</p>
+    <div class="passos-grid">
+      <div class="passo">
+        <span class="passo-n">01</span>
+        <div class="passo-icon">📦</div>
+        <h3>Escolha os Serviços</h3>
+        <p>Navegue pelo catálogo, explore cada solução e adicione ao carrinho os serviços que fazem sentido para o seu negócio. Sem compromisso ainda.</p>
+      </div>
+      <div class="passo">
+        <span class="passo-n">02</span>
+        <div class="passo-icon">🧾</div>
+        <h3>Monte o Pedido</h3>
+        <p>Ajuste quantidades, escolha a forma de pagamento preferida e preencha seus dados básicos. Tudo em segundos, sem precisar criar conta.</p>
+      </div>
+      <div class="passo">
+        <span class="passo-n">03</span>
+        <div class="passo-icon">💬</div>
+        <h3>Feche pelo WhatsApp</h3>
+        <p>Clique em "Enviar pelo WhatsApp" e tudo vai detalhado direto para o nosso especialista. Respondemos em até 24 horas úteis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CATÁLOGO ════ -->
+<section id="catalogo">
+  <div class="cat-inner">
+    <div class="cat-header">
+      <div>
+        <h2 class="titulo-secao">Nosso <em>Catálogo</em></h2>
+        <p class="subtitulo-secao" style="margin-bottom:0;">Escolha a solução certa para o seu momento.</p>
+      </div>
+      <div class="filtros" id="filtros-container">
+        <button class="btn-filtro ativo" onclick="filtrarProdutos('Todos')">Todos</button>
+        <button class="btn-filtro" onclick="filtrarProdutos('Sistemas')">Sistemas ERP</button>
+        <button class="btn-filtro" onclick="filtrarProdutos('Dados')">Análise de Dados</button>
+        <button class="btn-filtro" onclick="filtrarProdutos('Serviços')">Consultoria e RPA</button>
+      </div>
+    </div>
+    <div class="grid-produtos" id="grid-produtos"></div>
+  </div>
+</section>
+
+<!-- ════ DEPOIMENTOS ════ -->
+<section id="depoimentos">
+  <div class="dep-inner container">
+    <h2 class="titulo-secao">O que dizem <em>nossos clientes</em></h2>
+    <p class="subtitulo-secao">Resultados reais de quem confiou na Wes Tec para transformar sua operação.</p>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-aspas">"</div>
+        <p class="dep-texto">Implantamos o ERP Mellea e em menos de 2 semanas já tínhamos tudo organizado. Acabaram as planilhas duplicadas e os erros de estoque. A equipe da Wes Tec foi extraordinária.</p>
+        <div class="dep-autor">
+          <div class="dep-avatar">MR</div>
+          <div class="dep-nome">
+            <strong>Marcelo R.</strong>
+            <span>Diretor, Distribuidora MR</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-aspas">"</div>
+        <p class="dep-texto">O dashboard financeiro que eles criaram nos economiza 3 horas por semana de relatórios manuais. Agora vejo o DRE em tempo real. Decisão mais fácil ficou impossível.</p>
+        <div class="dep-autor">
+          <div class="dep-avatar">CL</div>
+          <div class="dep-nome">
+            <strong>Camila L.</strong>
+            <span>CFO, Grupo Stellar</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-aspas">"</div>
+        <p class="dep-texto">O robô de automação que desenvolveram processa 400 pedidos por dia sem erro. Liberamos 2 colaboradores para funções estratégicas. O ROI foi em menos de 3 meses.</p>
+        <div class="dep-autor">
+          <div class="dep-avatar">FT</div>
+          <div class="dep-nome">
+            <strong>Fernando T.</strong>
+            <span>COO, LogisPak</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ DIFERENCIAIS ════ -->
+<section id="diferenciais">
+  <div class="dif-inner">
+    <h2 class="titulo-secao">Por que a <em>Wes Tec?</em></h2>
+    <p class="subtitulo-secao">Especialistas focados em resultado. Sem enrolação, sem terceirização.</p>
+    <div class="dif-grid">
+      <div class="dif-card">
+        <span class="dif-icon">⚡</span>
+        <h3>Entrega Ágil</h3>
+        <p>Projetos em semanas, não meses. Primeira entrega parcial em até 48 horas após o briefing.</p>
+      </div>
+      <div class="dif-card">
+        <span class="dif-icon">🔒</span>
+        <h3>Dados Seguros</h3>
+        <p>Sua informação tratada com confidencialidade total. Contratos com cláusula de sigilo padrão.</p>
+      </div>
+      <div class="dif-card">
+        <span class="dif-icon">🤝</span>
+        <h3>Suporte Humano</h3>
+        <p>Fale diretamente com quem fez o projeto. Sem tickets genéricos, sem suporte robótico.</p>
+      </div>
+      <div class="dif-card">
+        <span class="dif-icon">📈</span>
+        <h3>ROI Comprovado</h3>
+        <p>Métricas claras antes e depois. Entregamos relatório de impacto ao final de cada projeto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTATO ════ -->
+<section id="contato">
+  <div class="contato-inner container">
+    <div class="contato-txt">
+      <h2 class="titulo-secao">Vamos <em>trabalhar juntos?</em></h2>
+      <p>Sem formulário, sem robô. Fale com um especialista da Wes Tec, tire suas dúvidas e entenda como podemos transformar sua operação com dados e automação.</p>
+      <div class="features-grid">
+        <div class="feat"><span class="feat-icon">🗺️</span><div class="feat-t"><strong>Localização</strong><span>Arapongas, Paraná — BR</span></div></div>
+        <div class="feat"><span class="feat-icon">⏰</span><div class="feat-t"><strong>Horário</strong><span>Seg–Sex, 8h–18h</span></div></div>
+        <div class="feat"><span class="feat-icon">✉️</span><div class="feat-t"><strong>E-mail</strong><span>contato@westec.com.br</span></div></div>
+        <div class="feat"><span class="feat-icon">💬</span><div class="feat-t"><strong>WhatsApp</strong><span>Resposta em até 24h</span></div></div>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>Prefere falar agora?</h3>
+      <p>Clique abaixo e inicie uma conversa diretamente com nosso especialista no WhatsApp. Rápido, sem burocracia.</p>
+      <a href="https://wa.me/5543996469627" target="_blank" class="wpp-btn">
+        <span>💬</span> Chamar no WhatsApp
+      </a>
+      <div class="contact-info">
+        <div class="ci"><span>📍</span> Arapongas, Paraná — BR</div>
+        <div class="ci"><span>⏰</span> Atendimento: Seg–Sex, 8h–18h</div>
+        <div class="ci"><span>✉️</span> contato@westec.com.br</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TOAST ════ -->
+<div id="toast">✅ Produto adicionado ao pedido!</div>
+
+<!-- ════ CARRINHO LATERAL ════ -->
+<div class="overlay-carrinho" id="overlay" onclick="fecharCarrinho()"></div>
+<aside class="carrinho-lateral" id="carrinho">
+  <div class="carrinho-header">
+    <h2>Seu <em>Pedido</em></h2>
+    <button class="fechar-carrinho" onclick="fecharCarrinho()">×</button>
+  </div>
+
+  <!-- área de itens: flex-grow, scroll interno -->
+  <div class="itens-carrinho" id="lista-carrinho"></div>
+
+  <!-- checkout fixo -->
+  <div class="form-checkout">
+    <h3>Dados &amp; Pagamento</h3>
+    <div class="form-row">
+      <input type="text" id="cli-nome" placeholder="Nome da Empresa / Responsável">
+    </div>
+    <div class="form-row">
+      <input type="text" id="cli-cidade" placeholder="Cidade — Estado">
+    </div>
+    <p class="label-pag">Forma de Pagamento:</p>
+    <div class="opcoes-pagamento">
+      <div class="opcao-pag">
+        <input type="radio" id="pag-pix" name="pagamento" value="Pix" checked onchange="atualizarInterfaceCarrinho()">
+        <label for="pag-pix">Pix −5%</label>
+      </div>
+      <div class="opcao-pag">
+        <input type="radio" id="pag-cartao" name="pagamento" value="Cartão de Crédito" onchange="atualizarInterfaceCarrinho()">
+        <label for="pag-cartao">Cartão</label>
+      </div>
+      <div class="opcao-pag">
+        <input type="radio" id="pag-boleto" name="pagamento" value="Boleto Faturado" onchange="atualizarInterfaceCarrinho()">
+        <label for="pag-boleto">Boleto</label>
+      </div>
+    </div>
+    <div class="totais">
+      <div class="linha-total"><span>Subtotal</span><span id="txt-subtotal">R$ 0,00</span></div>
+      <div class="linha-total desconto" id="linha-desconto"><span>Desconto Pix (5%)</span><span id="txt-desconto">− R$ 0,00</span></div>
+      <div class="linha-total destaque"><span>Total</span><span id="txt-total">R$ 0,00</span></div>
+    </div>
+    <button class="btn-finalizar" onclick="enviarParaWhatsApp()">
+      <span>💬</span> Enviar pelo WhatsApp
+    </button>
+  </div>
+</aside>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-marca">
+        <a href="#" class="marca" style="margin-bottom:14px;">WES<em>TEC</em><span class="dot">.</span></a>
+        <p>Soluções em Inteligência Artificial, Business Intelligence e Automação para empresas que querem tomar decisões melhores com dados.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Soluções</h4>
+        <a href="#catalogo">Sistemas ERP</a>
+        <a href="#catalogo">Dashboards BI</a>
+        <a href="#catalogo">Automação RPA</a>
+        <a href="#catalogo">Consultoria IA</a>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="#sobre">Sobre Nós</a>
+        <a href="#como-funciona">Como Funciona</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href="https://wa.me/5543996469627">WhatsApp</a>
+        <a href="mailto:contato@westec.com.br">E-mail</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Wes Tec · Todos os direitos reservados.</p>
+      <p class="footer-vermelho">Arapongas, Paraná — Brasil</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ════ SCRIPT ════ -->
+<script>
+  const numeroWhatsApp = "5543996469627";
+  const taxaDescontoPix = 0.05;
+
+  const produtos = [
+    { id: 1, categoria: "Sistemas", nome: "Micro ERP Mellea (Mensalidade)", preco: 250.00,
+      desc: "Sistema ágil e modular para substituir planilhas e organizar sua operação do dia a dia com controle total.",
+      img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" },
+    { id: 2, categoria: "Sistemas", nome: "Licença Anual ERP Mellea", preco: 2500.00,
+      desc: "Desconto especial para contrato anual do sistema Mellea. Economia garantida com suporte completo incluso.",
+      img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop" },
+    { id: 3, categoria: "Dados", nome: "Dashboard Financeiro BI", preco: 1800.00,
+      desc: "DRE, fluxo de caixa e indicadores em tempo real com Power BI. Tome decisões mais rápidas e seguras.",
+      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop" },
+    { id: 4, categoria: "Dados", nome: "Infraestrutura de Dados", preco: 3500.00,
+      desc: "Modelagem avançada, Data Warehouse e pipelines ETL robustos para sua empresa crescer com dados confiáveis.",
+      img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop" },
+    { id: 5, categoria: "Serviços", nome: "Robô de Automação (RPA)", preco: 2100.00,
+      desc: "Automatize tarefas repetitivas com robôs inteligentes. Ganhe tempo, reduza erros e libere sua equipe.",
+      img: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop" },
+    { id: 6, categoria: "Serviços", nome: "Consultoria em Inteligência Artificial", preco: 500.00,
+      desc: "Análise de viabilidade e estratégia de IA por hora técnica com especialistas certificados e experientes.",
+      img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=600&auto=format&fit=crop" }
+  ];
+
+  let carrinho = [];
+
+  /* ── Tema ── */
+  function alternarTema() {
+    const html = document.documentElement;
+    const atual = html.getAttribute('data-tema');
+    const novo = atual === 'escuro' ? 'claro' : 'escuro';
+    html.setAttribute('data-tema', novo);
+    document.getElementById('btn-tema').textContent = novo === 'escuro' ? '🌙' : '☀️';
+    localStorage.setItem('wt-tema', novo);
+  }
+  (function() {
+    const salvo = localStorage.getItem('wt-tema');
+    if (salvo) {
+      document.documentElement.setAttribute('data-tema', salvo);
+      document.getElementById('btn-tema').textContent = salvo === 'escuro' ? '🌙' : '☀️';
+    }
+  })();
+
+  /* ── Catálogo ── */
+  function renderizarProdutos(cat = 'Todos') {
+    const grid = document.getElementById('grid-produtos');
+    grid.innerHTML = '';
+    const lista = cat === 'Todos' ? produtos : produtos.filter(p => p.categoria === cat);
+    lista.forEach(p => {
+      grid.innerHTML += `
+        <div class="card-produto">
+          <div class="card-img-wrap">
+            <img src="${p.img}" alt="${p.nome}" class="img-produto"
+              onerror="this.src='https://placehold.co/600x210/111/dc2626?text=Wes+Tec'">
+            <div class="card-img-overlay"></div>
+            <span class="tag-categoria">${p.categoria}</span>
+          </div>
+          <div class="info-produto">
+            <h3>${p.nome}</h3>
+            <p>${p.desc}</p>
+            <div class="card-footer">
+              <div class="preco">
+                <small>a partir de</small>
+                R$ ${p.preco.toFixed(2).replace('.', ',')}
+              </div>
+              <button class="btn-add" onclick="adicionarAoCarrinho(${p.id})">+ Adicionar</button>
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  function filtrarProdutos(cat) {
+    document.querySelectorAll('.btn-filtro').forEach(btn => {
+      btn.classList.remove('ativo');
+      const txt = btn.innerText;
+      if (cat === 'Todos' && txt === 'Todos') btn.classList.add('ativo');
+      else if (txt.includes(cat)) btn.classList.add('ativo');
+    });
+    renderizarProdutos(cat);
+  }
+
+  /* ── Carrinho ── */
+  function adicionarAoCarrinho(id) {
+    const prod = produtos.find(p => p.id === id);
+    const existe = carrinho.find(i => i.id === id);
+    if (existe) existe.qtd++;
+    else carrinho.push({ ...prod, qtd: 1 });
+    atualizarInterfaceCarrinho();
+    mostrarToast();
+  }
+
+  function alterarQtd(id, delta) {
+    const item = carrinho.find(i => i.id === id);
+    if (!item) return;
+    item.qtd += delta;
+    if (item.qtd <= 0) removerDoCarrinho(id);
+    else atualizarInterfaceCarrinho();
+  }
+
+  function removerDoCarrinho(id) {
+    carrinho = carrinho.filter(i => i.id !== id);
+    atualizarInterfaceCarrinho();
+  }
+
+  function atualizarInterfaceCarrinho() {
+    const lista = document.getElementById('lista-carrinho');
+    lista.innerHTML = '';
+    let subtotal = 0, totalItens = 0;
+
+    if (!carrinho.length) {
+      lista.innerHTML = '<p style="color:var(--texto2);text-align:center;margin-top:48px;font-size:14px;">Nenhum item adicionado ainda.</p>';
+    } else {
+      carrinho.forEach(item => {
+        subtotal += item.preco * item.qtd;
+        totalItens += item.qtd;
+        lista.innerHTML += `
+          <div class="item-carrinho">
+            <div class="item-info">
+              <h4>${item.nome}</h4>
+              <span class="item-preco">R$ ${(item.preco * item.qtd).toFixed(2).replace('.', ',')}</span>
+            </div>
+            <div class="controles-qtd">
+              <div class="qtd-botoes">
+                <button class="btn-qtd" onclick="alterarQtd(${item.id}, -1)">−</button>
+                <span class="qtd-valor">${item.qtd}</span>
+                <button class="btn-qtd" onclick="alterarQtd(${item.id}, 1)">+</button>
+              </div>
+              <button class="btn-remover" onclick="removerDoCarrinho(${item.id})">Remover</button>
+            </div>
+          </div>`;
+      });
+    }
+
+    document.getElementById('badge-carrinho').innerText = totalItens;
+    const pag = document.querySelector('input[name="pagamento"]:checked').value;
+    const desconto = pag === 'Pix' ? subtotal * taxaDescontoPix : 0;
+    document.getElementById('linha-desconto').style.display = pag === 'Pix' ? 'flex' : 'none';
+    document.getElementById('txt-subtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+    document.getElementById('txt-desconto').innerText = `− R$ ${desconto.toFixed(2).replace('.', ',')}`;
+    document.getElementById('txt-total').innerText = `R$ ${(subtotal - desconto).toFixed(2).replace('.', ',')}`;
+  }
+
+  function enviarParaWhatsApp() {
+    if (!carrinho.length) { alert('Adicione itens ao carrinho antes de enviar!'); return; }
+    const nome = document.getElementById('cli-nome').value.trim();
+    const cidade = document.getElementById('cli-cidade').value.trim();
+    const pag = document.querySelector('input[name="pagamento"]:checked').value;
+    if (!nome || !cidade) { alert('Preencha o nome e a cidade para continuar.'); return; }
+
+    let subtotal = 0;
+    let msg = `*NOVO PEDIDO | WES TEC* 🚀\n\n*Cliente:* ${nome}\n*Local:* ${cidade}\n\n*ITENS:*\n`;
+    carrinho.forEach(i => {
+      subtotal += i.preco * i.qtd;
+      msg += `• ${i.qtd}x ${i.nome} → R$ ${(i.preco * i.qtd).toFixed(2).replace('.', ',')}\n`;
+    });
+    const desc = pag === 'Pix' ? subtotal * taxaDescontoPix : 0;
+    msg += `\n*Subtotal:* R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+    if (desc) msg += `*Desconto Pix (5%):* − R$ ${desc.toFixed(2).replace('.', ',')}\n`;
+    msg += `*TOTAL:* R$ ${(subtotal - desc).toFixed(2).replace('.', ',')}\n`;
+    msg += `*Pagamento:* ${pag}\n\nAguardo o retorno para darmos andamento!`;
+    window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  function abrirCarrinho() {
+    document.getElementById('carrinho').classList.add('ativo');
+    document.getElementById('overlay').classList.add('ativo');
+  }
+  function fecharCarrinho() {
+    document.getElementById('carrinho').classList.remove('ativo');
+    document.getElementById('overlay').classList.remove('ativo');
+  }
+  function mostrarToast() {
+    const t = document.getElementById('toast');
+    t.className = 'mostrar';
+    setTimeout(() => { t.className = ''; }, 3000);
+  }
+
+  window.onload = () => {
+    renderizarProdutos('Todos');
+    atualizarInterfaceCarrinho();
+  };
+</script>
+</body>
+</html>
